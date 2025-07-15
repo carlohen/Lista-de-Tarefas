@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/todo.dart';
 import 'package:flutter_application_1/widgets/todo_list_item.dart';
 
 // ignore: must_be_immutable
@@ -12,7 +13,7 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   final TextEditingController todoController = TextEditingController();
 
-  List<String> todos = [];
+  List<Todo> todos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +42,21 @@ class _TodoListPageState extends State<TodoListPage> {
                       onPressed: () {
                         String text = todoController.text;
                         setState(() {
-                          todos.add(text);
+                          Todo newTodo = Todo(
+                            title: text,
+                            dateTime: DateTime.now(),
+                          );
+                          todos.add(newTodo);
                         });
                         todoController.clear();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 130, 10, 209),
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          130,
+                          10,
+                          209,
+                        ),
                         padding: EdgeInsets.all(17),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
@@ -65,22 +75,28 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (String todo in todos)
-                        TodoListItem(
-                          title: todo,
-                        ),
+                      for (Todo todo in todos) TodoListItem(todo: todo,),
                     ],
                   ),
                 ),
                 SizedBox(height: 16),
                 Row(
                   children: [
-                    Expanded(child: Text("voce possui ${todos.length} tarefas pendentes")),
+                    Expanded(
+                      child: Text(
+                        "voce possui ${todos.length} tarefas pendentes",
+                      ),
+                    ),
                     SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          240,
+                          240,
+                          240,
+                        ),
                         padding: EdgeInsets.all(17),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
